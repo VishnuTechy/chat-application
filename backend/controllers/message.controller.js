@@ -4,7 +4,7 @@ import { getReceiverSocketId, io } from "../socket/socket.js";
 
 export const sendMessage = async (req, res) => {
 	try {
-		const { message } = req.body;
+		const { message } ={message:encodeToBase64(req.body.message)} ;
 		const { id: receiverId } = req.params;
 		const senderId = req.user._id;
 
@@ -67,3 +67,7 @@ export const getMessages = async (req, res) => {
 		res.status(500).json({ error: "Internal server error" });
 	}
 };
+
+function encodeToBase64(message) {
+	return Buffer.from(message).toString('base64');
+  }
